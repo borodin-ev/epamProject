@@ -9,6 +9,10 @@ public class AllEventsPage {
 
     public static By allEventsCards = By.xpath("//div[contains(@class,'evnt-event-card')]");
 
-
-
+    public static By eventLocation = By.xpath(".//div[@class='evnt-event-details-table']//p/span");
+    public static By eventLanguage = By.xpath(".//p[@class='language']");
+    public static By eventName = By.xpath(".//div[@class='evnt-event-name']//span");
+    public static By eventDate = By.xpath(".//div[@class='evnt-dates-cell dates']/p/span[1]");
+    public static By eventRegistrationStatus = By.xpath(".//div[@class='evnt-dates-cell dates']/p/span[2]");
+    public static By eventSpeakerPhoto = By.xpath(".//div[@class='evnt-photo-wrapper']");
 }

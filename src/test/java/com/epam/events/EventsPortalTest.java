@@ -28,4 +28,19 @@ public class EventsPortalTest extends Hooks {
         log.info("Compare all event cards to counter in upcoming events tab");
         Asserts.upcomingEventsCompareWithTab();
     }
+
+    @Test
+    @DisplayName("Check event card elements")
+    void viewEventCards() {
+        log.info("Open " + cfg.mainpage()+"/events");
+        open(cfg.mainpage()+"/events");
+
+        AllEventsPageSteps aeps = new AllEventsPageSteps(WebDriverRunner.getWebDriver());
+
+        aeps.openUpcomingEvents();
+
+//        TODO порядок элементов
+        log.info("Check elements in event cards");
+        Asserts.elementsInEventCardChecker();
+    }
 }
