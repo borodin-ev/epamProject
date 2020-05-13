@@ -2,23 +2,26 @@ package com.epam.events;
 
 import com.codeborne.selenide.SelenideElement;
 import com.codeborne.selenide.ex.UIAssertionError;
+import com.epam.events.Configuration.Configuration;
 import com.epam.events.Pages.AllEventsPage;
+import com.epam.events.Pages.TalkPage;
+import org.aeonbits.owner.ConfigFactory;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.openqa.selenium.By;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 
 import static com.codeborne.selenide.CollectionCondition.sizeGreaterThan;
 import static com.codeborne.selenide.Condition.*;
 import static com.codeborne.selenide.Condition.attribute;
-import static com.codeborne.selenide.Selenide.$;
-import static com.codeborne.selenide.Selenide.$$;
+import static com.codeborne.selenide.Selenide.*;
 import static com.epam.events.Helpers.Helpers.*;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class Asserts {
-
+    private static Configuration cfg = ConfigFactory.create(Configuration.class);
     private static final Logger log = LogManager.getLogger(Asserts.class);
 
     public static void upcomingEventsCompareWithTab() {
@@ -85,5 +88,39 @@ public class Asserts {
             dateOfEvent = convert(event.$(AllEventsPage.eventDate).getText());
             assertTrue(dateOfEvent.isBefore(nowDate()), "Date of event must be before " + nowDate() + "\nActual event date is " + dateOfEvent);
         }
+    }
+
+    //    TODO name
+    public static void checkFilter() {
+        ArrayList<String> links;
+
+        links = getTalksLinks();
+
+        for (String link : links) {
+            log.info("Open page " + link);
+            open(link);
+            $(TalkPage.location).shouldBe(visible);
+            containsText(TalkPage.location,cfg.location());
+            containsText(TalkPage.language,cfg.language());
+            assertTrue(checkDesignTag(), "There is no design tag");
+        }
+    }
+
+    public static boolean checkDesignTag() {
+        $$(TalkPage.tags).shouldHave(sizeGreaterThan(0));
+        for(SelenideElement tag: $$(TalkPage.tags)) {
+            try {
+                tag.shouldHave(text("Design"));
+                return true;
+            }
+            catch (UIAssertionError ex) {
+                log.warn("Tag should have text \"Design\". Actual text - "+ tag.getText());
+            }
+        }
+        return false;
+    }
+
+    public static void containsText(By element ,String expectedText) {
+        $(element).shouldHave(text(expectedText));
     }
 }

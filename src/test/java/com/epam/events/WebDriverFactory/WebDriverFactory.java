@@ -75,7 +75,7 @@ public class WebDriverFactory {
         }
         wdf.driver.manage().window().maximize();
         WebDriverRunner.setWebDriver(wdf.driver);
-        com.codeborne.selenide.Configuration.timeout = 6000;
+        com.codeborne.selenide.Configuration.timeout = 10000;
         com.codeborne.selenide.Configuration.screenshots = false;
         com.codeborne.selenide.Configuration.savePageSource = false;
     }

@@ -5,6 +5,7 @@ import com.epam.events.Configuration.Configuration;
 import com.epam.events.Pages.AllEventsPage;
 import com.epam.events.Pages.EventPage;
 import com.epam.events.StepDefs.AllEventsPageSteps;
+import com.epam.events.StepDefs.TalksLibrarySteps;
 import org.aeonbits.owner.ConfigFactory;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -12,6 +13,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import static com.codeborne.selenide.Selenide.open;
+import static com.epam.events.Helpers.Helpers.talksLoader;
 
 public class EventsPortalTest extends Hooks {
     private static Configuration cfg = ConfigFactory.create(Configuration.class);
@@ -104,5 +106,28 @@ public class EventsPortalTest extends Hooks {
         Asserts.checkElementIsVisible(EventPage.eventDateTime);
         log.info("Check event location is visible");
         Asserts.checkElementIsVisible(EventPage.eventLocation);
+    }
+
+    @Test
+    @DisplayName("Check filters")
+    void reportCategoryFilter() {
+        log.info("Open " + cfg.mainpage()+"/talks");
+        open(cfg.mainpage()+"/talks");
+
+        TalksLibrarySteps tls = new TalksLibrarySteps(WebDriverRunner.getWebDriver());
+
+        tls.openCategoryFilter()
+                .chooseDesign()
+                .openMoreFilters()
+                .openLocationFilter()
+                .chooseBelarus()
+                .openLanguageFilter()
+                .chooseEnglish();
+
+        talksLoader();
+
+        log.info("SMTH");
+        Asserts.checkFilter();
+
     }
 }

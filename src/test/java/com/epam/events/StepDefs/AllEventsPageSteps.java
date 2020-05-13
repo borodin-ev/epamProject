@@ -13,7 +13,6 @@ import static com.codeborne.selenide.Selenide.$$;
 
 public class AllEventsPageSteps extends Abstract {
     public AllEventsPageSteps(WebDriver driver) {super(driver);}
-    private static Configuration cfg = ConfigFactory.create(Configuration.class);
 
     public AllEventsPageSteps openUpcomingEvents() {
         log.info("Click on upcoming events tab");
