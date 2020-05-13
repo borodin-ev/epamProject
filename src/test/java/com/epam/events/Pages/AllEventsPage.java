@@ -15,4 +15,7 @@ public class AllEventsPage {
     public static By eventDate = By.xpath(".//div[@class='evnt-dates-cell dates']/p/span[1]");
     public static By eventRegistrationStatus = By.xpath(".//div[@class='evnt-dates-cell dates']/p/span[2]");
     public static By eventSpeakerPhoto = By.xpath(".//div[@class='evnt-photo-wrapper']");
+
+    public static By thisWeekTitle = By.xpath("//div[@class='evnt-cards-container']/h3[contains(text(), 'This week')]");
+    public static By allEventsOnThisWeek = By.xpath("//div[@class='evnt-cards-container'][1]//div[@class='evnt-events-column cell-3']");
 }

@@ -5,15 +5,21 @@ import com.codeborne.selenide.ex.UIAssertionError;
 import com.epam.events.Pages.AllEventsPage;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.openqa.selenium.By;
 
+import java.time.LocalDate;
+
+import static com.codeborne.selenide.CollectionCondition.sizeGreaterThan;
 import static com.codeborne.selenide.Condition.*;
 import static com.codeborne.selenide.Condition.attribute;
 import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.$$;
+import static com.epam.events.Helpers.Helpers.*;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class Asserts {
 
-    private static final Logger log = LogManager.getLogger(EventsPortalTest.class);
+    private static final Logger log = LogManager.getLogger(Asserts.class);
 
     public static void upcomingEventsCompareWithTab() {
         $$(AllEventsPage.allEventsCards).shouldHaveSize
@@ -48,6 +54,23 @@ public class Asserts {
         }
         catch (UIAssertionError ex) {
             event.$(AllEventsPage.eventSpeakerPhoto).shouldHave(and("Have two attributes", attribute("data-name"), attribute("data-job-title")));
+        }
+    }
+
+    public static void checkElementIsVisible (By element) {
+        $(element).shouldBe(visible);
+    }
+
+    public static void checkEventsThisWeekMoreThanZero() {
+        $$(AllEventsPage.allEventsOnThisWeek).shouldBe(sizeGreaterThan(0));
+    }
+
+    public static void checkEventsDatesThisWeek() {
+        LocalDate dateOfEvent;
+        for (SelenideElement event : $$(AllEventsPage.allEventsOnThisWeek)) {
+            dateOfEvent = convert(event.$(AllEventsPage.eventDate).getText());
+            assertTrue(dateOfEvent.compareTo(nowDate())>=0 && dateOfEvent.compareTo(getLastDayOfWeek())<=0,
+                    "Date of event must be between " + nowDate() +" and " + getLastDayOfWeek() + "\nActual event date is " + dateOfEvent);
         }
     }
 }

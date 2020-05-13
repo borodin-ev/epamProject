@@ -2,6 +2,7 @@ package com.epam.events;
 
 import com.codeborne.selenide.WebDriverRunner;
 import com.epam.events.Configuration.Configuration;
+import com.epam.events.Pages.AllEventsPage;
 import com.epam.events.StepDefs.AllEventsPageSteps;
 import org.aeonbits.owner.ConfigFactory;
 import org.apache.logging.log4j.LogManager;
@@ -42,5 +43,25 @@ public class EventsPortalTest extends Hooks {
 //        TODO порядок элементов
         log.info("Check elements in event cards");
         Asserts.elementsInEventCardChecker();
+    }
+
+    @Test
+    @DisplayName("Events date validation")
+    void eventsDateValidation() {
+        log.info("Open " + cfg.mainpage()+"/events");
+        open(cfg.mainpage()+"/events");
+
+        AllEventsPageSteps aeps = new AllEventsPageSteps(WebDriverRunner.getWebDriver());
+
+        aeps.openUpcomingEvents();
+
+        log.info("Checking title \"This week\"");
+        Asserts.checkElementIsVisible(AllEventsPage.thisWeekTitle);
+
+        log.info("Checking events exist this week");
+        Asserts.checkEventsThisWeekMoreThanZero();
+
+        log.info("Check this week event dates are correct");
+        Asserts.checkEventsDatesThisWeek();
     }
 }
