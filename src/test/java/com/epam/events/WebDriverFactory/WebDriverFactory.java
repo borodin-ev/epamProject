@@ -40,7 +40,7 @@ public class WebDriverFactory {
                 WebDriverManager.chromedriver().setup();
 
                 ChromeOptions chromeOptions = new ChromeOptions();
-                chromeOptions.setHeadless(true);
+                chromeOptions.setHeadless(false);
 
                 delegate = new ChromeDriver(chromeOptions);
 

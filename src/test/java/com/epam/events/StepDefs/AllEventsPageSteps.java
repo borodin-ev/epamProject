@@ -22,4 +22,26 @@ public class AllEventsPageSteps extends Abstract {
         return this;
     }
 
+    public AllEventsPageSteps openPastEvents() {
+        log.info("Click on past events tab");
+        $(AllEventsPage.pastEventsTab).click();
+        $(AllEventsPage.pastAllEventsTitle).shouldBe(visible);
+
+        return this;
+    }
+
+    public AllEventsPageSteps openLocationFilter() {
+        log.info("Click on location filter");
+        $(AllEventsPage.locationFilter).click();
+
+        return this;
+    }
+
+    public AllEventsPageSteps chooseCanadaLocation() {
+        log.info("Choose Canada location");
+        $(AllEventsPage.locationFilterCanadaCheckbox).click();
+        $(AllEventsPage.filerResultMessage).shouldBe(visible);
+
+        return this;
+    }
 }

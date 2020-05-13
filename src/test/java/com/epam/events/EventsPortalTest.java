@@ -64,4 +64,23 @@ public class EventsPortalTest extends Hooks {
         log.info("Check this week event dates are correct");
         Asserts.checkEventsDatesThisWeek();
     }
+
+    @Test
+    @DisplayName("Check event dates in Canada")
+    void viewPastEventsInCanada() {
+        log.info("Open " + cfg.mainpage()+"/events");
+        open(cfg.mainpage()+"/events");
+
+        AllEventsPageSteps aeps = new AllEventsPageSteps(WebDriverRunner.getWebDriver());
+
+        aeps.openPastEvents()
+                .openLocationFilter()
+                .chooseCanadaLocation();
+
+        log.info("Compare all event cards to counter in past events tab");
+        Asserts.pastEventsCompareWithTab();
+
+        log.info("Check events dates are in past");
+        Asserts.checkEventsDatesInPast();
+    }
 }

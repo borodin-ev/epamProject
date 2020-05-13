@@ -73,4 +73,17 @@ public class Asserts {
                     "Date of event must be between " + nowDate() +" and " + getLastDayOfWeek() + "\nActual event date is " + dateOfEvent);
         }
     }
+
+    public static void pastEventsCompareWithTab() {
+        $$(AllEventsPage.allEventsCards).shouldHaveSize
+                (Integer.parseInt($(AllEventsPage.pastEventsCounter).getText()));
+    }
+
+    public static void checkEventsDatesInPast() {
+        LocalDate dateOfEvent;
+        for (SelenideElement event : $$(AllEventsPage.allEventsCards)) {
+            dateOfEvent = convert(event.$(AllEventsPage.eventDate).getText());
+            assertTrue(dateOfEvent.isBefore(nowDate()), "Date of event must be before " + nowDate() + "\nActual event date is " + dateOfEvent);
+        }
+    }
 }
