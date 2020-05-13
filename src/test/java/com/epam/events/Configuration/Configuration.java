@@ -20,4 +20,7 @@ public interface Configuration extends Config {
 
     @Key("search.keyword")
     String keyword();
+
+    @Key("endpoint.events")
+    String events();
 }

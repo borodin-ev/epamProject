@@ -44,4 +44,15 @@ public class AllEventsPageSteps extends Abstract {
 
         return this;
     }
+
+    public EventPageSteps openRandomEvent() {
+        Random rnd = new Random();
+
+        log.info("Open random event");
+        $$(AllEventsPage.allEventsCards)
+                .get(rnd.nextInt($$(AllEventsPage.allEventsCards).size()))
+                .click();
+
+        return new EventPageSteps(driver);
+    }
 }
