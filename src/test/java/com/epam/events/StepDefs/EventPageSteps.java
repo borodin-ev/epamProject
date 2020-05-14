@@ -12,9 +12,11 @@ public class EventPageSteps extends Abstract {
         Helpers.checkElementIsVisible(EventPage.registrationButton);
         log.info("Check event program is visible");
         Helpers.checkElementIsVisible(EventPage.eventProgram);
-        log.info("Check event date and time is visible");
-        Helpers.checkElementIsVisible(EventPage.eventDateTime);
-        log.info("Check event location is visible");
-        Helpers.checkElementIsVisible(EventPage.eventLocation);
+        log.info("Check event date is visible");
+        Helpers.checkElementIsVisible(EventPage.eventDate);
+        log.info("Check event time is visible");
+        Helpers.checkElementIsVisible(EventPage.eventTime);
+//        log.info("Check event location is visible");
+//        Helpers.checkElementIsVisible(EventPage.eventLocation);
     }
 }
