@@ -1,15 +1,23 @@
 package com.epam.events.Helpers;
 
 import com.codeborne.selenide.SelenideElement;
+import com.codeborne.selenide.WebDriverRunner;
 import com.epam.events.Pages.TalksLibraryPage;
 import com.epam.healenium.annotation.DisableHealing;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.openqa.selenium.By;
+import ru.yandex.qatools.ashot.AShot;
+import ru.yandex.qatools.ashot.shooting.ShootingStrategies;
 
+import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 import java.lang.reflect.UndeclaredThrowableException;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Locale;
@@ -76,5 +84,26 @@ public class Helpers {
             links.add(talk.$(By.xpath("./div/a")).getAttribute("href"));
         }
         return links;
+    }
+
+    public String takeScreenshot() throws IOException {
+        BufferedImage image = new AShot()
+                .shootingStrategy(ShootingStrategies.viewportPasting(100)).
+                        takeScreenshot(WebDriverRunner.getWebDriver()).getImage();
+
+        File outputFile = new File(createImage());
+        ImageIO.write(image, "jpg", outputFile);
+
+        return outputFile.getAbsolutePath();
+    }
+
+    private String createImage() throws IOException {
+        File myObj = new File("build/ashot/image" + LocalDateTime.now() + ".jpg");
+        if (myObj.createNewFile()) {
+            log.info("File created: " + myObj.getName());
+        } else {
+            log.info("File already exists.");
+        }
+        return myObj.getAbsolutePath();
     }
 }

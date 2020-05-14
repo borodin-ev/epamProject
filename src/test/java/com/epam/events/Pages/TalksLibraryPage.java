@@ -19,4 +19,8 @@ public class TalksLibraryPage {
     public static By talksCards = By.xpath("//div[@class='evnt-talks-column cell-6']");
 
     public static By loader = By.xpath("//div[@class='evnt-cards-loading']");
+
+    public static By search = By.xpath("//input[@placeholder='Search by Talk Name']");
+
+    public static By talksContainer = By.xpath("//div[@class='evnt-talks-wrapper']/div");
 }

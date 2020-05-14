@@ -1,11 +1,13 @@
 package com.epam.events.StepDefs;
 
+import com.codeborne.selenide.CollectionCondition;
 import com.epam.events.Pages.TalksLibraryPage;
 import org.openqa.selenium.WebDriver;
 
 import static com.codeborne.selenide.Condition.exist;
 import static com.codeborne.selenide.Condition.visible;
 import static com.codeborne.selenide.Selenide.$;
+import static com.codeborne.selenide.Selenide.$$;
 
 public class TalksLibrarySteps extends Abstract{
     public TalksLibrarySteps(WebDriver driver) {super(driver);}
@@ -64,6 +66,15 @@ public class TalksLibrarySteps extends Abstract{
         $(TalksLibraryPage.languageFilterButton).click();
         $(TalksLibraryPage.filerResultMessage).shouldBe(visible);
 
+        return this;
+    }
+
+    public TalksLibrarySteps searchByKeyword(String keyword) {
+        log.info("Search by keyword " + keyword);
+        $(TalksLibraryPage.search).setValue(keyword).pressEnter();
+//        $(TalksLibraryPage.popularTalksTitle).shouldNot(exist);
+
+        $$(TalksLibraryPage.talksContainer).shouldHave(CollectionCondition.size(1));
         return this;
     }
 }
