@@ -23,4 +23,7 @@ public interface Configuration extends Config {
 
     @Key("endpoint.events")
     String events();
+
+    @Key("endpoint.talkLibrary")
+    String talkLibrary();
 }

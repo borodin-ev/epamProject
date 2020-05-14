@@ -9,12 +9,14 @@ public class AllEventsPage {
 
     public static By allEventsCards = By.xpath("//div[contains(@class,'evnt-event-card')]");
 
-    public static By eventLocation = By.xpath(".//div[@class='evnt-event-details-table']//p/span");
-    public static By eventLanguage = By.xpath(".//p[@class='language']");
-    public static By eventName = By.xpath(".//div[@class='evnt-event-name']//span");
-    public static By eventDate = By.xpath(".//div[@class='evnt-dates-cell dates']/p/span[1]");
-    public static By eventRegistrationStatus = By.xpath(".//div[@class='evnt-dates-cell dates']/p/span[2]");
-    public static By eventSpeakerPhoto = By.xpath(".//div[@class='evnt-photo-wrapper']");
+    public static By eventLocation = By.xpath(".//div[@class='evnt-card-heading']//div[contains(@class,'online-cell') and following-sibling::div[contains(@class,'language-cell')]]");
+    public static By eventLanguage = By.xpath(".//div[@class='evnt-card-heading']//div[contains(@class,'language-cell') and preceding-sibling::div[contains(@class,'online-cell')]]");
+    public static By eventName = By.xpath(".//div[@class='evnt-card-body' and preceding-sibling::div[@class='evnt-card-heading']]//div[@class='evnt-event-name' and following-sibling::div[@class='evnt-event-dates']]");
+    public static By eventDate = By.xpath(".//div[@class='evnt-card-body' and preceding-sibling::div[@class='evnt-card-heading']]//div[@class='evnt-event-dates' and preceding-sibling::div[@class='evnt-event-name']]//span[@class='date']");
+    public static By eventRegistrationStatus = By.xpath(".//div[@class='evnt-card-body' and preceding-sibling::div[@class='evnt-card-heading']]//div[@class='evnt-event-dates' and preceding-sibling::div[@class='evnt-event-name']]//span[contains(@class,'status') and preceding-sibling::span[@class='date']]");
+    public static By eventSizeMSpeakers = By.xpath(".//div[@class='evnt-card-footer' and preceding-sibling::div[@class='evnt-card-body']]//div[@class='evnt-speaker']");
+    public static By eventSizeSSpeakers = By.xpath(".//div[@class='evnt-card-body' and preceding-sibling::div[@class='evnt-card-heading']]//div[@class='evnt-dates-cell speakers']/div");
+
 
     public static By thisWeekTitle = By.xpath("//div[@class='evnt-cards-container']/h3[contains(text(), 'This week')]");
 

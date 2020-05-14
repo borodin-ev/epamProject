@@ -33,7 +33,6 @@ public class WebDriverFactory {
 
         WebDriver delegate;
         WebDriverFactory wdf = new WebDriverFactory();
-        Config config = ConfigFactory.load("healenium.properties");
 
         switch (browser) {
             case CHROME:
@@ -44,7 +43,7 @@ public class WebDriverFactory {
 
                 delegate = new ChromeDriver(chromeOptions);
 
-                wdf.driver = SelfHealingDriver.create(delegate, config);
+                wdf.driver = SelfHealingDriver.create(delegate);
                 break;
             case FIREFOX:
                 WebDriverManager.firefoxdriver().setup();
@@ -54,7 +53,7 @@ public class WebDriverFactory {
 
                 delegate = new FirefoxDriver(firefoxOptions);
 
-                wdf.driver = SelfHealingDriver.create(delegate, config);
+                wdf.driver = SelfHealingDriver.create(delegate);
                 break;
             case REMOTE:
                 DesiredCapabilities capabilities = new DesiredCapabilities();
@@ -67,7 +66,7 @@ public class WebDriverFactory {
                         URI.create("http://localhost:4444/wd/hub").toURL(),
                         capabilities);
 
-                wdf.driver = SelfHealingDriver.create(remDriver, config);
+                wdf.driver = SelfHealingDriver.create(remDriver);
                 break;
 
             default:
