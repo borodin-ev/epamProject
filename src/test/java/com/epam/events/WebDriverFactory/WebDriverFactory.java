@@ -3,8 +3,6 @@ package com.epam.events.WebDriverFactory;
 import com.codeborne.selenide.WebDriverRunner;
 import com.epam.events.Configuration.Configuration;
 import com.epam.healenium.SelfHealingDriver;
-import com.typesafe.config.Config;
-import com.typesafe.config.ConfigFactory;
 import io.github.bonigarcia.wdm.WebDriverManager;
 import org.openqa.selenium.Dimension;
 import org.openqa.selenium.WebDriver;
@@ -77,7 +75,7 @@ public class WebDriverFactory {
 //        wdf.driver.manage().window().maximize();
         wdf.driver.manage().window().setSize(new Dimension(1200, 800));
         WebDriverRunner.setWebDriver(wdf.driver);
-        com.codeborne.selenide.Configuration.timeout = 5000;
+        com.codeborne.selenide.Configuration.timeout = 8000;
         com.codeborne.selenide.Configuration.screenshots = false;
         com.codeborne.selenide.Configuration.savePageSource = false;
     }

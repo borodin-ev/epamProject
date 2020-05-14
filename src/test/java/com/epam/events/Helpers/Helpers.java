@@ -24,7 +24,6 @@ import java.util.Locale;
 
 import static com.codeborne.selenide.Condition.*;
 import static com.codeborne.selenide.Selenide.*;
-import static com.codeborne.selenide.Selenide.$$;
 
 public class Helpers {
     private static final Logger log = LogManager.getLogger(Helpers.class);
@@ -117,17 +116,5 @@ public class Helpers {
         else {
             return "s";
         }
-    }
-
-    public static void checkElementIsVisible (By element) {
-        $(element).shouldBe(visible);
-    }
-
-    public static void checkElementIsVisible (By element, String message) {
-        $(element).shouldBe(visible.because(message));
-    }
-
-    public static void containsText(By element ,String expectedText) {
-        $(element).shouldHave(text(expectedText));
     }
 }

@@ -15,24 +15,22 @@ public class Watcher implements AfterTestExecutionCallback {
     public void afterTestExecution(ExtensionContext context) throws Exception {
         ReportPortalMessage message;
 
-        Boolean testResult = context.getExecutionException().isPresent();
+        boolean testResult = context.getExecutionException().isPresent();
 
         //false - SUCCESS, true - FAILED
+        Helpers help = new Helpers();
         if(testResult)  {
-            Helpers help = new Helpers();
             log.info("Test failed");
 
             message = new ReportPortalMessage
                     (new File(help.takeScreenshot()), "Failed test screenshot");
 
-            log.info(message);
         } else {
-            Helpers help = new Helpers();
             log.info("Test succeed");
 
             message = new ReportPortalMessage
                     (new File(help.takeScreenshot()), "Succeed test screenshot");
-            log.info(message);
         }
+        log.info(message);
     }
 }

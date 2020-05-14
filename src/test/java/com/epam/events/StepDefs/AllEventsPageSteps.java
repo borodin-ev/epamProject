@@ -2,7 +2,6 @@ package com.epam.events.StepDefs;
 
 import com.codeborne.selenide.SelenideElement;
 import com.epam.events.Configuration.Configuration;
-import com.epam.events.Helpers.Helpers;
 import com.epam.events.Pages.AllEventsPage;
 import org.aeonbits.owner.ConfigFactory;
 import org.apache.logging.log4j.LogManager;
@@ -13,6 +12,7 @@ import java.time.LocalDate;
 import java.util.Random;
 
 import static com.codeborne.selenide.CollectionCondition.sizeGreaterThan;
+import static com.codeborne.selenide.Condition.exist;
 import static com.codeborne.selenide.Condition.visible;
 import static com.codeborne.selenide.Selenide.*;
 import static com.epam.events.Helpers.Helpers.*;
@@ -20,8 +20,8 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class AllEventsPageSteps extends Abstract {
 
-    private Logger log = LogManager.getLogger(Abstract.class);
-    private Configuration cfg = ConfigFactory.create(Configuration.class);
+    private final Logger log = LogManager.getLogger(Abstract.class);
+    private final Configuration cfg = ConfigFactory.create(Configuration.class);
     public AllEventsPageSteps(WebDriver driver) {super(driver);}
 
     public AllEventsPageSteps openPage() {
@@ -82,6 +82,7 @@ public class AllEventsPageSteps extends Abstract {
         $$(AllEventsPage.allEventsCards).shouldHaveSize
                 (Integer.parseInt($(AllEventsPage.upcomingEventsCounter).getText()));
     }
+
     public AllEventsPageSteps pastEventsCompareWithTab() {
         log.info("Compare all event cards to counter in past events tab");
         $$(AllEventsPage.allEventsCards).shouldHaveSize
@@ -119,7 +120,7 @@ public class AllEventsPageSteps extends Abstract {
     }
 
     public AllEventsPageSteps checkEventsThisWeekMoreThanZero() {
-        Helpers.checkElementIsVisible(AllEventsPage.thisWeekTitle, "Title \"This week\" should exist");
+        $(AllEventsPage.thisWeekTitle).should(exist);
         log.info("Checking events exist this week");
         $$(AllEventsPage.allEventsOnThisWeek).shouldBe(sizeGreaterThan(0));
 

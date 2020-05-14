@@ -5,7 +5,6 @@ import com.codeborne.selenide.SelenideElement;
 import com.codeborne.selenide.ex.UIAssertionError;
 import com.epam.events.Configuration.Configuration;
 import com.epam.events.Helpers.Helpers;
-import com.epam.events.Pages.EventPage;
 import com.epam.events.Pages.TalkPage;
 import com.epam.events.Pages.TalksLibraryPage;
 import org.aeonbits.owner.ConfigFactory;
@@ -14,15 +13,11 @@ import org.openqa.selenium.WebDriver;
 
 import java.util.ArrayList;
 
-import static com.codeborne.selenide.CollectionCondition.sizeGreaterThan;
 import static com.codeborne.selenide.Condition.*;
 import static com.codeborne.selenide.Selenide.*;
-import static com.epam.events.Helpers.Helpers.containsText;
-import static com.epam.events.Helpers.Helpers.getTalksLinks;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class TalksLibrarySteps extends Abstract{
-    private static Configuration cfg = ConfigFactory.create(Configuration.class);
+    private final static Configuration cfg = ConfigFactory.create(Configuration.class);
     public TalksLibrarySteps(WebDriver driver) {super(driver);}
 
     public TalksLibrarySteps openPage() {
@@ -119,9 +114,9 @@ public class TalksLibrarySteps extends Abstract{
             $(TalkPage.location).shouldBe(visible);
 
             log.info("Checking location");
-            Helpers.containsText(TalkPage.location,cfg.location());
+            $(TalkPage.location).shouldHave(text(cfg.location()));
             log.info("Checking language");
-            Helpers.containsText(TalkPage.language,cfg.language());
+            $(TalkPage.language).shouldHave(text(cfg.language()));
             log.info("Checking tag");
             $(TalkPage.tag).shouldBe(visible);
         }
@@ -154,7 +149,7 @@ public class TalksLibrarySteps extends Abstract{
                 log.info("Open page " + link);
                 open(link);
 
-                containsText(TalkPage.title, cfg.keyword());
+                $(TalkPage.title).shouldHave(text(cfg.keyword()));
                 log.info(linksCounter + " out of " + savedLinks.size() + " talks checked");
                 linksCounter++;
             }
