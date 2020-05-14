@@ -13,7 +13,7 @@ import org.junit.jupiter.api.parallel.ExecutionMode;
 @ExtendWith(Watcher.class)
 @Execution(ExecutionMode.CONCURRENT)
 public class EventsPortalTest extends Hooks {
-    private static Configuration cfg = ConfigFactory.create(Configuration.class);
+    private final Configuration cfg = ConfigFactory.create(Configuration.class);
 
     @Test
     @DisplayName("View Upcoming Events Test")
@@ -63,17 +63,16 @@ public class EventsPortalTest extends Hooks {
     @Test
     @DisplayName("Check filters")
     void reportCategoryFilter() {
-        talksLibrarySteps.openPage()
-                .openCategoryFilter().
-                chooseDesign().
+        talksLibrarySteps.openPage().
+                openCategoryFilter().
+                chooseCategory().
                 openMoreFilters().
                 openLocationFilter().
-                chooseBelarus().
+                chooseLocation().
                 openLanguageFilter().
-                chooseEnglish().
+                chooseLanguage().
                 loadAllTalks().
                 checkFilteredData();
-
     }
 
     @Test

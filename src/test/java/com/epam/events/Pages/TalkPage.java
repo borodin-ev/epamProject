@@ -6,4 +6,5 @@ public class TalkPage {
     public static By location = By.cssSelector("div.location");
     public static By language = By.cssSelector("div.language");
     public static By tag = By.xpath("//div[@class='evnt-topics-wrapper']//label[contains(text(), 'Design')]");
+    public static By title = By.xpath("//h1[@class='evnt-talk-title']");
 }

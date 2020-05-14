@@ -95,11 +95,9 @@ public class AllEventsPageSteps extends Abstract {
         log.info("Check elements in event cards");
         log.info("Total event cards = " + $$(AllEventsPage.allEventsCards).size());
 
-
-
         for(SelenideElement event : $$(AllEventsPage.allEventsCards)) {
             x++;
-            log.info("Cheking " + x + " card");
+            log.info("Checking " + x + " card");
             log.info("Checking location");
             event.$(AllEventsPage.eventLocation).shouldBe(visible);
             log.info("Checking language");

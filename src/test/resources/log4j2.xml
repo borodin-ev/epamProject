@@ -1,4 +1,3 @@
-<!--<configuration packages="com.epam.ta.reportportal.log4j.appender">-->
 <configuration status="INFO">
     <properties>
         <property name="pattern">[%d{HH:mm:ss}] %-5p (%F:%L) - %m%n</property>
@@ -10,6 +9,12 @@
         <Console name="LogToConsole" target="SYSTEM_OUT">
             <PatternLayout pattern="${pattern}}"/>
         </Console>
+        <RollingFile name="rollingFile" fileName="build/logs/Log.log" filePattern="build/logs/Log.%i.log.gz">
+            <PatternLayout pattern="${pattern}" />
+            <Policies>
+                <SizeBasedTriggeringPolicy size="10MB" />
+            </Policies>
+        </RollingFile>
     </appenders>
     <loggers>
         <Logger name="logger" level="info" additivity="false">
@@ -21,6 +26,7 @@
         <root level="INFO">
             <appender-ref ref="ReportPortalAppender"/>
             <appender-ref ref="LogToConsole"/>
+            <appender-ref ref="rollingFile" />
         </root>
     </loggers>
 </configuration>

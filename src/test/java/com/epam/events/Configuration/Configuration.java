@@ -18,6 +18,9 @@ public interface Configuration extends Config {
     @Key("filter.language")
     String language();
 
+    @Key("filter.tag")
+    String tag();
+
     @Key("search.keyword")
     String keyword();
 

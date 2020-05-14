@@ -6,6 +6,7 @@ import com.epam.healenium.SelfHealingDriver;
 import com.typesafe.config.Config;
 import com.typesafe.config.ConfigFactory;
 import io.github.bonigarcia.wdm.WebDriverManager;
+import org.openqa.selenium.Dimension;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
@@ -19,7 +20,7 @@ import java.net.URI;
 
 public class WebDriverFactory {
     private SelfHealingDriver driver;
-    private static Configuration cfg = org.aeonbits.owner.ConfigFactory.create(Configuration.class);
+    private final static Configuration cfg = org.aeonbits.owner.ConfigFactory.create(Configuration.class);
 
     enum Browsers {
         CHROME,
@@ -61,6 +62,7 @@ public class WebDriverFactory {
                 capabilities.setVersion("81.0");
                 capabilities.setCapability("enableVNC", true);
                 capabilities.setCapability("enableVideo", false);
+                capabilities.setCapability("pageLoadingStrategy", "normal");
 
                 RemoteWebDriver remDriver = new RemoteWebDriver(
                         URI.create("http://localhost:4444/wd/hub").toURL(),
@@ -72,9 +74,10 @@ public class WebDriverFactory {
             default:
                 break;
         }
-        wdf.driver.manage().window().maximize();
+//        wdf.driver.manage().window().maximize();
+        wdf.driver.manage().window().setSize(new Dimension(1200, 800));
         WebDriverRunner.setWebDriver(wdf.driver);
-        com.codeborne.selenide.Configuration.timeout = 10000;
+        com.codeborne.selenide.Configuration.timeout = 5000;
         com.codeborne.selenide.Configuration.screenshots = false;
         com.codeborne.selenide.Configuration.savePageSource = false;
     }

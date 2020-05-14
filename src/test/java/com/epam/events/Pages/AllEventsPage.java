@@ -27,6 +27,6 @@ public class AllEventsPage {
     public static By pastAllEventsTitle = By.xpath("//div[@class='evnt-cards-container']/h3[contains(text() , 'All Events')]");
     public static By locationFilter = By.id("filter_location");
     public static By locationFilterCanadaCheckbox = By.xpath("//div[@data-group='Canada']//div[@class='evnt-checkbox form-check']");
-    public static By filerResultMessage = By.xpath("//div[@class='evnt-filters-content-cell evnt-results-cell']/p[contains(text(), ' results found for:')]");
+    public static By filerResultMessage = By.xpath("//div[@class='evnt-filters-content-cell evnt-results-cell']");
     public static By pastEventsCounter = By.xpath("//ul[@class='evnt-tabs-list nav nav-tabs']/li[2]//span[@class='evnt-tab-counter evnt-label small white']");
 }

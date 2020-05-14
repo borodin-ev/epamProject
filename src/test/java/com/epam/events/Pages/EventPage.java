@@ -9,6 +9,4 @@ public class EventPage {
     public static By eventDate = By.xpath("//li[@class='evnt-day-tab active']/span");
     public static By eventTime = By.xpath("//div[@class='evnt-agenda-wrapper']//div[@class='evnt-timeline-cell agenda-time']/span");
     public static By eventLocation = By.xpath("//div[@class='evnt-content-cell details']/div[1]/span");
-
-    public static By title = By.xpath("//h1[@class='evnt-talk-title']");
 }

@@ -9,6 +9,7 @@ import com.epam.events.Pages.EventPage;
 import com.epam.events.Pages.TalkPage;
 import com.epam.events.Pages.TalksLibraryPage;
 import org.aeonbits.owner.ConfigFactory;
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 
 import java.util.ArrayList;
@@ -62,27 +63,27 @@ public class TalksLibrarySteps extends Abstract{
         return this;
     }
 
-    public TalksLibrarySteps chooseDesign() {
-        log.info("Choose design");
-        $(TalksLibraryPage.categoryFilterDesignCheckbox).click();
+    public TalksLibrarySteps chooseCategory() {
+        log.info("Choose tag " + cfg.tag());
+        $(TalksLibraryPage.categoryFilterCheckbox(cfg.tag())).click();
         $(TalksLibraryPage.categoryFilterButton).click();
         $(TalksLibraryPage.filerResultMessage).shouldBe(visible);
 
         return this;
     }
 
-    public TalksLibrarySteps chooseBelarus() {
-        log.info("Choose Belarus");
-        $(TalksLibraryPage.locationFilterBelarusCheckbox).click();
+    public TalksLibrarySteps chooseLocation() {
+        log.info("Choose location - " + cfg.location());
+        $(TalksLibraryPage.locationFilterCheckbox(cfg.location())).click();
         $(TalksLibraryPage.locationFilterButton).click();
         $(TalksLibraryPage.filerResultMessage).shouldBe(visible);
 
         return this;
     }
 
-    public TalksLibrarySteps chooseEnglish() {
-        log.info("Choose english");
-        $(TalksLibraryPage.languageFilterEnglishCheckbox).click();
+    public TalksLibrarySteps chooseLanguage() {
+        log.info("Choose language - " + cfg.language());
+        $(TalksLibraryPage.languageFilterCheckbox(cfg.language())).click();
         $(TalksLibraryPage.languageFilterButton).click();
         $(TalksLibraryPage.filerResultMessage).shouldBe(visible);
 
@@ -127,20 +128,36 @@ public class TalksLibrarySteps extends Abstract{
     }
 
     public  void searchForKeyword() {
-        log.info("Check keyword in every talk");
-        int x = 0;
-        ArrayList<String> links;
+        log.info("Check keyword in talk card");
+        ArrayList<String> savedLinks = new ArrayList<>();
+        int size = $$(TalksLibraryPage.talksCards).size();
+        int cardsCounter = 1;
+        int linksCounter = 1;
 
-        links = getTalksLinks();
+        log.info("Total talk cards - " + size);
+        for (SelenideElement talkCard : $$(TalksLibraryPage.talksCards)) {
+            log.info("Checking " + cardsCounter + " card");
+            try {
+                talkCard.$(TalksLibraryPage.talkCardTitle).shouldHave(text(cfg.keyword()));
+            }
+            catch (UIAssertionError ex) {
+                log.warn("Didn't find keyword \"" + cfg.keyword() + "\" in talk card. Title too long?");
+                log.info("Save url of talk and check it later");
+                savedLinks.add(talkCard.$(By.xpath("./div/a")).getAttribute("href"));
+            }
+            cardsCounter++;
+        }
 
+        if(!savedLinks.isEmpty()) {
+            for (String link : savedLinks) {
 
-        for (String link : links) {
-            x++;
-            log.info("Open page " + link);
-            open(link);
+                log.info("Open page " + link);
+                open(link);
 
-            containsText(EventPage.title, cfg.keyword());
-            log.info(x + " out of " + links.size() + " talks checked");
+                containsText(TalkPage.title, cfg.keyword());
+                log.info(linksCounter + " out of " + savedLinks.size() + " talks checked");
+                linksCounter++;
+            }
         }
     }
 }
