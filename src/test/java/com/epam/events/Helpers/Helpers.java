@@ -2,11 +2,18 @@ package com.epam.events.Helpers;
 
 import com.codeborne.selenide.SelenideElement;
 import com.codeborne.selenide.WebDriverRunner;
+import com.epam.events.Hooks;
 import com.epam.events.Pages.TalksLibraryPage;
+import com.epam.events.WebDriverFactory.WebDriverFactory;
+import com.epam.healenium.SelfHealingDriver;
+import com.epam.healenium.SelfHealingEngine;
 import com.epam.healenium.annotation.DisableHealing;
+import com.epam.healenium.handlers.proxy.SelfHealingProxyInvocationHandler;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.remote.Augmenter;
 import ru.yandex.qatools.ashot.AShot;
 import ru.yandex.qatools.ashot.shooting.ShootingStrategies;
 
@@ -25,7 +32,7 @@ import java.util.Locale;
 import static com.codeborne.selenide.Condition.*;
 import static com.codeborne.selenide.Selenide.*;
 
-public class Helpers {
+public class Helpers extends Hooks {
     private static final Logger log = LogManager.getLogger(Helpers.class);
 
     public static LocalDate getLastDayOfWeek() {
@@ -86,9 +93,9 @@ public class Helpers {
     }
 
     public String takeScreenshot() throws IOException {
-        BufferedImage image = new AShot()
-                .shootingStrategy(ShootingStrategies.viewportPasting(100)).
-                        takeScreenshot(WebDriverRunner.getWebDriver()).getImage();
+        BufferedImage image = new AShot().
+                shootingStrategy(ShootingStrategies.viewportPasting(100)).
+                takeScreenshot(WebDriverRunner.getWebDriver()).getImage();
 
         File outputFile = new File(createImage());
         ImageIO.write(image, "jpg", outputFile);
@@ -96,8 +103,8 @@ public class Helpers {
         return outputFile.getAbsolutePath();
     }
 
-    private String createImage() throws IOException {
-        File myObj = new File("build/ashot/image" + LocalDateTime.now() + ".jpg");
+    public static String createImage() throws IOException {
+        File myObj = new File("build/ashot/image-" + LocalDateTime.now() + ".jpg");
         if (myObj.createNewFile()) {
             log.info("File created: " + myObj.getName());
         } else {

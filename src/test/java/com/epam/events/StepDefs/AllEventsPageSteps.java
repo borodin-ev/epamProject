@@ -70,6 +70,7 @@ public class AllEventsPageSteps extends Abstract {
         log.info("Open random event");
         $$(AllEventsPage.allEventsCards)
                 .get(rnd.nextInt($$(AllEventsPage.allEventsCards).size()))
+                .scrollIntoView(true)
                 .click();
 
         return new EventPageSteps(driver);

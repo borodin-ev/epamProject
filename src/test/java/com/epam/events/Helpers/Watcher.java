@@ -1,5 +1,6 @@
 package com.epam.events.Helpers;
 
+import com.epam.events.WebDriverFactory.WebDriverFactory;
 import com.epam.reportportal.message.ReportPortalMessage;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -8,17 +9,17 @@ import org.junit.jupiter.api.extension.ExtensionContext;
 
 import java.io.File;
 
+//TODO проблема с скринами при запуске локально
 public class Watcher implements AfterTestExecutionCallback {
     protected static final Logger log = LogManager.getLogger("binary_data_logger");
 
     @Override
     public void afterTestExecution(ExtensionContext context) throws Exception {
         ReportPortalMessage message;
+        Helpers help = new Helpers();
 
         boolean testResult = context.getExecutionException().isPresent();
-
         //false - SUCCESS, true - FAILED
-        Helpers help = new Helpers();
         if(testResult)  {
             log.info("Test failed");
 

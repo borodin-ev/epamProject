@@ -17,7 +17,6 @@ import java.net.MalformedURLException;
 import java.net.URI;
 
 public class WebDriverFactory {
-    private SelfHealingDriver driver;
     private final static Configuration cfg = org.aeonbits.owner.ConfigFactory.create(Configuration.class);
 
     enum Browsers {
@@ -26,24 +25,26 @@ public class WebDriverFactory {
         REMOTE
     }
 
-    public static void create() throws MalformedURLException {
+    public static SelfHealingDriver create() throws MalformedURLException {
+        WebDriver delegate;
 
         Browsers browser = Browsers.valueOf(cfg.browser().toUpperCase());
 
-        WebDriver delegate;
-        WebDriverFactory wdf = new WebDriverFactory();
+        com.codeborne.selenide.Configuration.timeout = 8000;
+        com.codeborne.selenide.Configuration.startMaximized = true;
+        com.codeborne.selenide.Configuration.screenshots = false;
+        com.codeborne.selenide.Configuration.savePageSource = false;
 
         switch (browser) {
             case CHROME:
                 WebDriverManager.chromedriver().setup();
 
                 ChromeOptions chromeOptions = new ChromeOptions();
-                chromeOptions.setHeadless(false);
+                chromeOptions.setHeadless(true);
 
                 delegate = new ChromeDriver(chromeOptions);
-
-                wdf.driver = SelfHealingDriver.create(delegate);
-                break;
+                delegate.manage().window().maximize();
+                return SelfHealingDriver.create(delegate);
             case FIREFOX:
                 WebDriverManager.firefoxdriver().setup();
 
@@ -51,9 +52,8 @@ public class WebDriverFactory {
                 firefoxOptions.setHeadless(true);
 
                 delegate = new FirefoxDriver(firefoxOptions);
-
-                wdf.driver = SelfHealingDriver.create(delegate);
-                break;
+                delegate.manage().window().maximize();
+                return SelfHealingDriver.create(delegate);
             case REMOTE:
                 DesiredCapabilities capabilities = new DesiredCapabilities();
                 capabilities.setBrowserName("chrome");
@@ -66,17 +66,11 @@ public class WebDriverFactory {
                         URI.create("http://localhost:4444/wd/hub").toURL(),
                         capabilities);
 
-                wdf.driver = SelfHealingDriver.create(remDriver);
-                break;
+                remDriver.manage().window().maximize();
 
+                return SelfHealingDriver.create(remDriver);
             default:
-                break;
+                throw new IllegalArgumentException("Wrong browser argument. Choose among CHROME, FIREFOX and REMOTE");
         }
-//        wdf.driver.manage().window().maximize();
-        wdf.driver.manage().window().setSize(new Dimension(1200, 800));
-        WebDriverRunner.setWebDriver(wdf.driver);
-        com.codeborne.selenide.Configuration.timeout = 8000;
-        com.codeborne.selenide.Configuration.screenshots = false;
-        com.codeborne.selenide.Configuration.savePageSource = false;
     }
 }
