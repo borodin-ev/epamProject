@@ -4,16 +4,11 @@ import com.codeborne.selenide.SelenideElement;
 import com.codeborne.selenide.WebDriverRunner;
 import com.epam.events.Hooks;
 import com.epam.events.Pages.TalksLibraryPage;
-import com.epam.events.WebDriverFactory.WebDriverFactory;
 import com.epam.healenium.SelfHealingDriver;
-import com.epam.healenium.SelfHealingEngine;
 import com.epam.healenium.annotation.DisableHealing;
-import com.epam.healenium.handlers.proxy.SelfHealingProxyInvocationHandler;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.remote.Augmenter;
 import ru.yandex.qatools.ashot.AShot;
 import ru.yandex.qatools.ashot.shooting.ShootingStrategies;
 
@@ -95,7 +90,7 @@ public class Helpers extends Hooks {
     public String takeScreenshot() throws IOException {
         BufferedImage image = new AShot().
                 shootingStrategy(ShootingStrategies.viewportPasting(100)).
-                takeScreenshot(WebDriverRunner.getWebDriver()).getImage();
+                takeScreenshot(((SelfHealingDriver) WebDriverRunner.getWebDriver()).getDelegate()).getImage();
 
         File outputFile = new File(createImage());
         ImageIO.write(image, "jpg", outputFile);

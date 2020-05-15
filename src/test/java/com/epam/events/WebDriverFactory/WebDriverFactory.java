@@ -28,7 +28,7 @@ public class WebDriverFactory {
         REMOTE
     }
 
-    public static SelfHealingDriver create() throws IOException, InterruptedException {
+        public static SelfHealingDriver create() throws IOException, InterruptedException {
         WebDriver delegate;
 
         Browsers browser = Browsers.valueOf(cfg.browser().toUpperCase());
