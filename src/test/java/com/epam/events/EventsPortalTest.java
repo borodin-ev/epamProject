@@ -6,12 +6,8 @@ import org.aeonbits.owner.ConfigFactory;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.junit.jupiter.api.parallel.Execution;
-import org.junit.jupiter.api.parallel.ExecutionMode;
-
 
 @ExtendWith(Watcher.class)
-@Execution(ExecutionMode.CONCURRENT)
 public class EventsPortalTest extends Hooks {
     private final Configuration cfg = ConfigFactory.create(Configuration.class);
 

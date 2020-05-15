@@ -4,6 +4,8 @@ import com.epam.events.Configuration.Configuration;
 import com.epam.events.Helpers.StartSelenoid;
 import com.epam.healenium.SelfHealingDriver;
 import io.github.bonigarcia.wdm.WebDriverManager;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
@@ -16,7 +18,9 @@ import java.io.IOException;
 import java.net.URI;
 
 public class WebDriverFactory {
+    private static final Logger log = LogManager.getLogger(WebDriverFactory.class);
     private final static Configuration cfg = org.aeonbits.owner.ConfigFactory.create(Configuration.class);
+    private static String port = null;
 
     enum Browsers {
         CHROME,
@@ -36,6 +40,7 @@ public class WebDriverFactory {
 
         switch (browser) {
             case CHROME:
+                log.info("Creating chrome driver");
                 WebDriverManager.chromedriver().setup();
 
                 ChromeOptions chromeOptions = new ChromeOptions();
@@ -45,6 +50,7 @@ public class WebDriverFactory {
                 delegate.manage().window().maximize();
                 return SelfHealingDriver.create(delegate);
             case FIREFOX:
+                log.info("Creating firefox driver");
                 WebDriverManager.firefoxdriver().setup();
 
                 FirefoxOptions firefoxOptions = new FirefoxOptions();
@@ -54,8 +60,12 @@ public class WebDriverFactory {
                 delegate.manage().window().maximize();
                 return SelfHealingDriver.create(delegate);
             case REMOTE:
-                String port = StartSelenoid.start();
+                if(port == null) {
+                    log.info("Launching selenoid");
+                    port = StartSelenoid.start();
+                }
 
+                log.info("Creating remote driver");
                 DesiredCapabilities capabilities = new DesiredCapabilities();
                 capabilities.setBrowserName("chrome");
                 capabilities.setVersion("81.0");

@@ -18,7 +18,7 @@ public class StartSelenoid {
 
         String line;
         while ((line = reader.readLine()) != null) {
-            System.out.println(output.append(line + "\n"));
+            System.out.println(output.append(line).append("\n"));
         }
 
         int exitVal = process.waitFor();
