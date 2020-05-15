@@ -1,15 +1,12 @@
 package com.epam.events;
 
-import com.epam.events.Configuration.Configuration;
 import com.epam.events.Helpers.Watcher;
-import org.aeonbits.owner.ConfigFactory;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 
 @ExtendWith(Watcher.class)
 public class EventsPortalTest extends Hooks {
-    private final Configuration cfg = ConfigFactory.create(Configuration.class);
 
     @Test
     @DisplayName("View Upcoming Events Test")
@@ -75,8 +72,8 @@ public class EventsPortalTest extends Hooks {
     @DisplayName("Check search by keyword")
     void searchReportsByKeyword() {
         talksLibrarySteps.openPage().
-                searchByKeyword(cfg.keyword()).
+                searchByKeyword().
                 loadAllTalks().
-                searchForKeyword();
+                checkForKeyword();
     }
 }

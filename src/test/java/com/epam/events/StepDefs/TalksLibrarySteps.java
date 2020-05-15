@@ -85,10 +85,9 @@ public class TalksLibrarySteps extends Abstract{
         return this;
     }
 
-    public TalksLibrarySteps searchByKeyword(String keyword) {
-        log.info("Search by keyword " + keyword);
-        $(TalksLibraryPage.search).setValue(keyword).pressEnter();
-//        $(TalksLibraryPage.popularTalksTitle).shouldNot(exist);
+    public TalksLibrarySteps searchByKeyword() {
+        log.info("Search by keyword " + cfg.keyword());
+        $(TalksLibraryPage.search).setValue(cfg.keyword()).pressEnter();
 
         $$(TalksLibraryPage.talksContainer).shouldHave(CollectionCondition.size(1));
         return this;
@@ -122,7 +121,7 @@ public class TalksLibrarySteps extends Abstract{
         }
     }
 
-    public  void searchForKeyword() {
+    public  void checkForKeyword() {
         log.info("Check keyword in talk card");
         ArrayList<String> savedLinks = new ArrayList<>();
         int size = $$(TalksLibraryPage.talksCards).size();
