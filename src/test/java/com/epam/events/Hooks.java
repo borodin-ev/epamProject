@@ -7,14 +7,14 @@ import com.epam.events.WebDriverFactory.WebDriverFactory;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 
-import java.net.MalformedURLException;
+import java.io.IOException;
 
 public class Hooks {
     AllEventsPageSteps allEventsPageSteps;
     TalksLibrarySteps talksLibrarySteps;
 
     @BeforeEach
-    public void setUp() throws MalformedURLException {
+    public void setUp() throws IOException, InterruptedException {
         WebDriverRunner.setWebDriver(WebDriverFactory.create());
 
         allEventsPageSteps = new AllEventsPageSteps(WebDriverRunner.getWebDriver());

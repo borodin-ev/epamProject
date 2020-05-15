@@ -1,6 +1,5 @@
 package com.epam.events.Helpers;
 
-import com.epam.events.WebDriverFactory.WebDriverFactory;
 import com.epam.reportportal.message.ReportPortalMessage;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -9,7 +8,6 @@ import org.junit.jupiter.api.extension.ExtensionContext;
 
 import java.io.File;
 
-//TODO проблема с скринами при запуске локально
 public class Watcher implements AfterTestExecutionCallback {
     protected static final Logger log = LogManager.getLogger("binary_data_logger");
 
@@ -23,6 +21,7 @@ public class Watcher implements AfterTestExecutionCallback {
         if(testResult)  {
             log.info("Test failed");
 
+            //TODO проблема с скринами при запуске локально
             message = new ReportPortalMessage
                     (new File(help.takeScreenshot()), "Failed test screenshot");
 

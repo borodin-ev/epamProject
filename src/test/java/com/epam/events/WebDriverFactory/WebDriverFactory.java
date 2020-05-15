@@ -1,10 +1,9 @@
 package com.epam.events.WebDriverFactory;
 
-import com.codeborne.selenide.WebDriverRunner;
 import com.epam.events.Configuration.Configuration;
+import com.epam.events.Helpers.StartSelenoid;
 import com.epam.healenium.SelfHealingDriver;
 import io.github.bonigarcia.wdm.WebDriverManager;
-import org.openqa.selenium.Dimension;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
@@ -13,7 +12,7 @@ import org.openqa.selenium.firefox.FirefoxOptions;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.RemoteWebDriver;
 
-import java.net.MalformedURLException;
+import java.io.IOException;
 import java.net.URI;
 
 public class WebDriverFactory {
@@ -25,7 +24,7 @@ public class WebDriverFactory {
         REMOTE
     }
 
-    public static SelfHealingDriver create() throws MalformedURLException {
+    public static SelfHealingDriver create() throws IOException, InterruptedException {
         WebDriver delegate;
 
         Browsers browser = Browsers.valueOf(cfg.browser().toUpperCase());
@@ -55,6 +54,8 @@ public class WebDriverFactory {
                 delegate.manage().window().maximize();
                 return SelfHealingDriver.create(delegate);
             case REMOTE:
+                String port = StartSelenoid.start();
+
                 DesiredCapabilities capabilities = new DesiredCapabilities();
                 capabilities.setBrowserName("chrome");
                 capabilities.setVersion("81.0");
@@ -63,7 +64,7 @@ public class WebDriverFactory {
                 capabilities.setCapability("pageLoadingStrategy", "normal");
 
                 RemoteWebDriver remDriver = new RemoteWebDriver(
-                        URI.create("http://localhost:4444/wd/hub").toURL(),
+                        URI.create("http://localhost:"+port+"/wd/hub").toURL(),
                         capabilities);
 
                 remDriver.manage().window().maximize();
