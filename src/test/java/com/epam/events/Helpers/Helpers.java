@@ -3,6 +3,7 @@ package com.epam.events.Helpers;
 import com.codeborne.selenide.SelenideElement;
 import com.codeborne.selenide.WebDriverRunner;
 import com.epam.events.Hooks;
+import com.epam.events.Pages.AllEventsPage;
 import com.epam.events.Pages.TalksLibraryPage;
 import com.epam.healenium.SelfHealingDriver;
 import com.epam.healenium.annotation.DisableHealing;
@@ -88,6 +89,7 @@ public class Helpers extends Hooks {
     }
 
     public String takeScreenshot() throws IOException {
+        deleteElements();
         BufferedImage image = new AShot().
                 shootingStrategy(ShootingStrategies.viewportPasting(100)).
                 takeScreenshot(((SelfHealingDriver) WebDriverRunner.getWebDriver()).getDelegate()).getImage();
@@ -117,6 +119,15 @@ public class Helpers extends Hooks {
         }
         else {
             return "s";
+        }
+    }
+
+    private void deleteElements() {
+        if ($(AllEventsPage.header).isDisplayed()) {
+            executeJavaScript("arguments[0].parentNode.removeChild(arguments[0])", $(AllEventsPage.header));
+        }
+        if ($(AllEventsPage.loginBottom).isDisplayed()) {
+            executeJavaScript("arguments[0].parentNode.removeChild(arguments[0])", $(AllEventsPage.loginBottom));
         }
     }
 }

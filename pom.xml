@@ -10,7 +10,7 @@
 
     <properties>
         <parallel>false</parallel>
-        <browser>remote</browser>
+        <browser>chrome</browser>
         <junit-jupiter-version>5.6.2</junit-jupiter-version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.compiler.target>1.8</maven.compiler.target>

@@ -29,4 +29,7 @@ public class AllEventsPage {
     public final static By locationFilterCanadaCheckbox = By.xpath("//div[@data-group='Canada']//div[@class='evnt-checkbox form-check']");
     public final static By filerResultMessage = By.xpath("//div[@class='evnt-filters-content-cell evnt-results-cell']");
     public final static By pastEventsCounter = By.xpath("//ul[@class='evnt-tabs-list nav nav-tabs']/li[2]//span[@class='evnt-tab-counter evnt-label small white']");
+
+    public final static By header = By.xpath("//header");
+    public final static By loginBottom = By.xpath("//div[@id='modal-app']/div/div");
 }
