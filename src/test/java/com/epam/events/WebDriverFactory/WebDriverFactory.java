@@ -20,7 +20,7 @@ import java.net.URI;
 public class WebDriverFactory {
     private static final Logger log = LogManager.getLogger(WebDriverFactory.class);
     private final static Configuration cfg = org.aeonbits.owner.ConfigFactory.create(Configuration.class);
-    private static String port = null;
+    public static String port = "";
 
     enum Browsers {
         CHROME,
@@ -60,11 +60,6 @@ public class WebDriverFactory {
                 delegate.manage().window().maximize();
                 return SelfHealingDriver.create(delegate);
             case REMOTE:
-                if(port == null) {
-                    log.info("Launching selenoid");
-                    port = StartSelenoid.start();
-                }
-
                 log.info("Creating remote driver");
                 DesiredCapabilities capabilities = new DesiredCapabilities();
                 capabilities.setBrowserName("chrome");

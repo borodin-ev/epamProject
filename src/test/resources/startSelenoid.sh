@@ -4,7 +4,7 @@ if [ $(docker inspect -f '{{.State.Running}}' "selenoid") = "true" ];
         docker ps --filter "name=^selenoid$" --format '{{.Ports}}'
 else
     curl -s https://aerokube.com/cm/bash | bash \
-    && ../../../cm selenoid start --port 4444 --vnc
+    && ./cm selenoid start --vnc
         if [ $(docker inspect -f '{{.State.Running}}' "selenoid") = "true" ];
         then
         echo "Selenoid successfully started";

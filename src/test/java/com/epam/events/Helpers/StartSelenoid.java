@@ -27,8 +27,8 @@ public class StartSelenoid {
             System.out.println(output);
             return output.toString().substring
                     (
-                            output.toString().indexOf(":") + 1,
-                            output.toString().indexOf(":") + 5
+                            output.toString().lastIndexOf("->") - 4,
+                            output.toString().lastIndexOf("->")
                     );
 
         } else {

@@ -21,7 +21,6 @@ public class Watcher implements AfterTestExecutionCallback {
         if(testResult)  {
             log.info("Test failed");
 
-            //TODO проблема с скринами при запуске локально
             message = new ReportPortalMessage
                     (new File(help.takeScreenshot()), "Failed test screenshot");
 
