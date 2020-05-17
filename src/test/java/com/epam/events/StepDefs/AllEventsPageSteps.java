@@ -39,9 +39,6 @@ public class AllEventsPageSteps extends Abstract {
     }
 
     public AllEventsPageSteps openPastEvents() {
-        log.info("Open " + cfg.mainpage()+cfg.events());
-        open(cfg.mainpage()+"/events");
-
         log.info("Click on past events tab");
         $(AllEventsPage.pastEventsTab).click();
         $(AllEventsPage.pastAllEventsTitle).shouldBe(visible);
