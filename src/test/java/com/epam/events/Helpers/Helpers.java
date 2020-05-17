@@ -101,6 +101,12 @@ public class Helpers extends Hooks {
     }
 
     public static String createImage() throws IOException {
+        String directoryName = "build/ashot";
+        File directory = new File(directoryName);
+        if (! directory.exists()){
+            directory.mkdirs();
+        }
+
         File myObj = new File("build/ashot/image-" + LocalDateTime.now() + ".jpg");
         if (myObj.createNewFile()) {
             log.info("File created: " + myObj.getName());
