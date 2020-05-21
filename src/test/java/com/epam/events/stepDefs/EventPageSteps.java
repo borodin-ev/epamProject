@@ -10,15 +10,16 @@ import static com.codeborne.selenide.Selenide.$;
 
 public class EventPageSteps extends Abstract {
     public EventPageSteps(WebDriver driver) {super(driver);}
+    EventPage eventPage = new EventPage();
 
     public void checkEventPageDetails() {
         log.info("Check registration button is visible");
-        $(EventPage.registrationButton).shouldBe(visible);
+        $(eventPage.registrationButton).shouldBe(visible);
         log.info("Check event program is visible");
-        $(EventPage.eventProgram).shouldBe(visible);
+        $(eventPage.eventProgram).shouldBe(visible);
         log.info("Check event date is visible");
-        $(EventPage.eventDate).shouldBe(visible);
+        $(eventPage.eventDate).shouldBe(visible);
         log.info("Check event time is visible");
-        $(EventPage.eventTime).shouldBe(visible);
+        $(eventPage.eventTime).shouldBe(visible);
     }
 }

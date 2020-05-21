@@ -4,6 +4,7 @@ import com.codeborne.selenide.SelenideElement;
 import com.codeborne.selenide.WebDriverRunner;
 import com.epam.events.Hooks;
 import com.epam.events.pages.AllEventsPage;
+import com.epam.events.pages.TalkPage;
 import com.epam.events.pages.TalksLibraryPage;
 import com.epam.healenium.SelfHealingDriver;
 import com.epam.healenium.annotation.DisableHealing;
@@ -53,36 +54,37 @@ public class Helpers extends Hooks {
     }
 
     @DisableHealing
-    public static void talksLoader() {
+    public static void talksLoader(TalksLibraryPage talksLibraryPage) {
+        
         log.info("Loading all talks");
-        int talksSize = $$(TalksLibraryPage.talksCards).size();
+        int talksSize = $$(talksLibraryPage.talksCards).size();
         log.info(talksSize + " talks at this moment");
         do {
             try {
-                executeJavaScript("arguments[0].scrollIntoView();", $$(TalksLibraryPage.talksCards).last());
-                $(TalksLibraryPage.loader).shouldNot(exist);
-//                executeJavaScript("arguments[0].scrollIntoView();", $$(TalksLibraryPage.talksCards).first());
+                executeJavaScript("arguments[0].scrollIntoView();", $$(talksLibraryPage.talksCards).last());
+                $(talksLibraryPage.loader).shouldNot(exist);
+//                executeJavaScript("arguments[0].scrollIntoView();", $$(talksLibraryPage.talksCards).first());
             }
             catch (UndeclaredThrowableException ex) {
-                executeJavaScript("arguments[0].scrollIntoView();", $$(TalksLibraryPage.talksCards).last());
-                $(TalksLibraryPage.loader).shouldNot(exist);
-//                executeJavaScript("arguments[0].scrollIntoView();", $$(TalksLibraryPage.talksCards).first());
+                executeJavaScript("arguments[0].scrollIntoView();", $$(talksLibraryPage.talksCards).last());
+                $(talksLibraryPage.loader).shouldNot(exist);
+//                executeJavaScript("arguments[0].scrollIntoView();", $$(talksLibraryPage.talksCards).first());
             }
 
-            if(talksSize == $$(TalksLibraryPage.talksCards).size()) {
-                log.info("All talks are loaded. Quantity of talks is " + $$(TalksLibraryPage.talksCards).size());
+            if(talksSize == $$(talksLibraryPage.talksCards).size()) {
+                log.info("All talks are loaded. Quantity of talks is " + $$(talksLibraryPage.talksCards).size());
                 break;
             }
-            talksSize = $$(TalksLibraryPage.talksCards).size();
+            talksSize = $$(talksLibraryPage.talksCards).size();
             log.info(talksSize + " talks are loaded at the moment.");
         }
         while(true);
     }
 
-    public static ArrayList<String> getTalksLinks() {
+    public static ArrayList<String> getTalksLinks(TalksLibraryPage talksLibraryPage) {
         ArrayList<String> links = new ArrayList<>();
 
-        for (SelenideElement talk : $$(TalksLibraryPage.talksCards)) {
+        for (SelenideElement talk : $$(talksLibraryPage.talksCards)) {
             links.add(talk.$(By.xpath("./div/a")).getAttribute("href"));
         }
         return links;
@@ -129,11 +131,12 @@ public class Helpers extends Hooks {
     }
 
     private void deleteElements() {
-        if ($(AllEventsPage.header).isDisplayed()) {
-            executeJavaScript("arguments[0].parentNode.removeChild(arguments[0])", $(AllEventsPage.header));
+        AllEventsPage allEventsPage = new AllEventsPage();
+        if ($(allEventsPage.header).isDisplayed()) {
+            executeJavaScript("arguments[0].parentNode.removeChild(arguments[0])", $(allEventsPage.header));
         }
-        if ($(AllEventsPage.loginBottom).isDisplayed()) {
-            executeJavaScript("arguments[0].parentNode.removeChild(arguments[0])", $(AllEventsPage.loginBottom));
+        if ($(allEventsPage.loginBottom).isDisplayed()) {
+            executeJavaScript("arguments[0].parentNode.removeChild(arguments[0])", $(allEventsPage.loginBottom));
         }
     }
 }

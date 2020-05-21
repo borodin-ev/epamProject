@@ -22,6 +22,7 @@ public class AllEventsPageSteps extends Abstract {
     private final Logger log = LogManager.getLogger(Abstract.class);
     private final Configuration cfg = ConfigFactory.create(Configuration.class);
     public AllEventsPageSteps(WebDriver driver) {super(driver);}
+    AllEventsPage allEventsPage = new AllEventsPage();
 
     public AllEventsPageSteps openPage() {
         log.info("Open " + cfg.mainpage()+cfg.events());
@@ -32,27 +33,27 @@ public class AllEventsPageSteps extends Abstract {
 
     public AllEventsPageSteps openUpcomingEvents() {
         log.info("Click on upcoming events tab");
-        $(AllEventsPage.upcomingEventsTab).click();
-        $(AllEventsPage.thisWeekTitle).shouldBe(visible);
+        $(allEventsPage.upcomingEventsTab).click();
+        $(allEventsPage.thisWeekTitle).shouldBe(visible);
 
         return this;
     }
 
     public AllEventsPageSteps openPastEvents() {
         log.info("Click on past events tab");
-        $(AllEventsPage.pastEventsTab).click();
-        $(AllEventsPage.pastAllEventsTitle).shouldBe(visible);
+        $(allEventsPage.pastEventsTab).click();
+        $(allEventsPage.pastAllEventsTitle).shouldBe(visible);
 
         return this;
     }
 
     public AllEventsPageSteps chooseLocationFilter(String location) {
         log.info("Click on location filter");
-        $(AllEventsPage.locationFilter).click();
+        $(allEventsPage.locationFilter).click();
 
         log.info("Choose Canada location");
-        $(AllEventsPage.locationFilterLocationCheckbox(location)).click();
-        $(AllEventsPage.filerResultMessage).shouldBe(visible);
+        $(allEventsPage.locationFilterLocationCheckbox(location)).click();
+        $(allEventsPage.filerResultMessage).shouldBe(visible);
 
         return this;
     }
@@ -61,8 +62,8 @@ public class AllEventsPageSteps extends Abstract {
         Random rnd = new Random();
 
         log.info("Open random event");
-        $$(AllEventsPage.allEventsCards)
-                .get(rnd.nextInt($$(AllEventsPage.allEventsCards).size()))
+        $$(allEventsPage.allEventsCards)
+                .get(rnd.nextInt($$(allEventsPage.allEventsCards).size()))
                 .scrollIntoView(true)
                 .click();
 
@@ -73,14 +74,14 @@ public class AllEventsPageSteps extends Abstract {
 
     public void upcomingEventsCompareWithTab() {
         log.info("Compare all event cards to counter in upcoming events tab");
-        $$(AllEventsPage.allEventsCards).shouldHaveSize
-                (Integer.parseInt($(AllEventsPage.upcomingEventsCounter).getText()));
+        $$(allEventsPage.allEventsCards).shouldHaveSize
+                (Integer.parseInt($(allEventsPage.upcomingEventsCounter).getText()));
     }
 
     public AllEventsPageSteps pastEventsCompareWithTab() {
         log.info("Compare all event cards to counter in past events tab");
-        $$(AllEventsPage.allEventsCards).shouldHaveSize
-                (Integer.parseInt($(AllEventsPage.pastEventsCounter).getText()));
+        $$(allEventsPage.allEventsCards).shouldHaveSize
+                (Integer.parseInt($(allEventsPage.pastEventsCounter).getText()));
 
         return this;
     }
@@ -88,35 +89,35 @@ public class AllEventsPageSteps extends Abstract {
     public void checkElementsInEventCard() {
         int x = 0;
         log.info("Check elements in event cards");
-        log.info("Total event cards = " + $$(AllEventsPage.allEventsCards).size());
+        log.info("Total event cards = " + $$(allEventsPage.allEventsCards).size());
 
-        for(SelenideElement event : $$(AllEventsPage.allEventsCards)) {
+        for(SelenideElement event : $$(allEventsPage.allEventsCards)) {
             x++;
             log.info("Checking " + x + " card");
             log.info("Checking location");
-            event.$(AllEventsPage.eventLocation).shouldBe(visible);
+            event.$(allEventsPage.eventLocation).shouldBe(visible);
             log.info("Checking language");
-            event.$(AllEventsPage.eventLanguage).shouldBe(visible);
+            event.$(allEventsPage.eventLanguage).shouldBe(visible);
             log.info("Checking title");
-            event.$(AllEventsPage.eventName).shouldBe(visible);
+            event.$(allEventsPage.eventName).shouldBe(visible);
             log.info("Checking date");
-            event.$(AllEventsPage.eventDate).shouldBe(visible);
+            event.$(allEventsPage.eventDate).shouldBe(visible);
             log.info("Checking registration status");
-            event.$(AllEventsPage.eventRegistrationStatus).shouldBe(visible);
+            event.$(allEventsPage.eventRegistrationStatus).shouldBe(visible);
             log.info("Checking speaker");
             if(eventCardSizeChecker(event).equals("M")) {
-                event.$(AllEventsPage.eventSizeMSpeakers).shouldBe(visible);
+                event.$(allEventsPage.eventSizeMSpeakers).shouldBe(visible);
             }
             else {
-                event.$(AllEventsPage.eventSizeSSpeakers).shouldBe(visible);
+                event.$(allEventsPage.eventSizeSSpeakers).shouldBe(visible);
             }
         }
     }
 
     public AllEventsPageSteps checkEventsThisWeekMoreThanZero() {
-        $(AllEventsPage.thisWeekTitle).should(exist);
+        $(allEventsPage.thisWeekTitle).should(exist);
         log.info("Checking events exist this week");
-        $$(AllEventsPage.allEventsOnThisWeek).shouldBe(sizeGreaterThan(0));
+        $$(allEventsPage.allEventsOnThisWeek).shouldBe(sizeGreaterThan(0));
 
         return this;
     }
@@ -124,8 +125,8 @@ public class AllEventsPageSteps extends Abstract {
     public void checkEventsDatesThisWeek() {
         log.info("Check this week event dates are correct");
         LocalDate dateOfEvent;
-        for (SelenideElement event : $$(AllEventsPage.allEventsOnThisWeek)) {
-            dateOfEvent = convert(event.$(AllEventsPage.eventDate).getText());
+        for (SelenideElement event : $$(allEventsPage.allEventsOnThisWeek)) {
+            dateOfEvent = convert(event.$(allEventsPage.eventDate).getText());
             assertTrue(dateOfEvent.compareTo(nowDate())>=0 && dateOfEvent.compareTo(getLastDayOfWeek())<=0,
                     "Date of event must be between " + nowDate() +" and " + getLastDayOfWeek() + "\nActual event date is " + dateOfEvent);
         }
@@ -134,8 +135,8 @@ public class AllEventsPageSteps extends Abstract {
     public void checkEventsDatesInPast() {
         log.info("Check events dates are in past");
         LocalDate dateOfEvent;
-        for (SelenideElement event : $$(AllEventsPage.allEventsCards)) {
-            dateOfEvent = convert(event.$(AllEventsPage.eventDate).getText());
+        for (SelenideElement event : $$(allEventsPage.allEventsCards)) {
+            dateOfEvent = convert(event.$(allEventsPage.eventDate).getText());
             assertTrue(dateOfEvent.isBefore(nowDate()), "Date of event must be before " + nowDate() + "\nActual event date is " + dateOfEvent);
         }
     }
