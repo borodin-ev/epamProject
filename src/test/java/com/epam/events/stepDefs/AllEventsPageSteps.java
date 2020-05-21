@@ -46,12 +46,12 @@ public class AllEventsPageSteps extends Abstract {
         return this;
     }
 
-    public AllEventsPageSteps chooseCanadaLocationFilter() {
+    public AllEventsPageSteps chooseLocationFilter(String location) {
         log.info("Click on location filter");
         $(AllEventsPage.locationFilter).click();
 
         log.info("Choose Canada location");
-        $(AllEventsPage.locationFilterCanadaCheckbox).click();
+        $(AllEventsPage.locationFilterLocationCheckbox(location)).click();
         $(AllEventsPage.filerResultMessage).shouldBe(visible);
 
         return this;

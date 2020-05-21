@@ -36,9 +36,11 @@ public class EventsPortalTest extends Hooks {
     @Test
     @DisplayName("Check event dates in Canada")
     void viewPastEventsInCanada() {
+        String location = "Canada";
+
         allEventsPageSteps.openPage().
                 openPastEvents().
-                chooseCanadaLocationFilter().
+                chooseLocationFilter(location).
                 pastEventsCompareWithTab().
                 checkEventsDatesInPast();
     }

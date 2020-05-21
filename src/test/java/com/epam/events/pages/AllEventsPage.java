@@ -26,7 +26,7 @@ public class AllEventsPage {
     public final static By pastEventsTab = By.xpath("//li[@class='evnt-tab-item nav-item']/a/span[contains(text(), 'Past')]");
     public final static By pastAllEventsTitle = By.xpath("//div[@class='evnt-cards-container']/h3[contains(text() , 'All Events')]");
     public final static By locationFilter = By.id("filter_location");
-    public final static By locationFilterCanadaCheckbox = By.xpath("//div[@data-group='Canada']//div[@class='evnt-checkbox form-check']");
+    public final static By locationFilterLocationCheckbox(String location)  {return By.xpath("//div[@data-group='"+location+"']//div[@class='evnt-checkbox form-check']");}
     public final static By filerResultMessage = By.xpath("//div[@class='evnt-filters-content-cell evnt-results-cell']");
     public final static By pastEventsCounter = By.xpath("//ul[@class='evnt-tabs-list nav nav-tabs']/li[2]//span[@class='evnt-tab-counter evnt-label small white']");
 
