@@ -1,12 +1,12 @@
-package com.epam.events.StepDefs;
+package com.epam.events.stepDefs;
 
 import com.codeborne.selenide.CollectionCondition;
 import com.codeborne.selenide.SelenideElement;
 import com.codeborne.selenide.ex.UIAssertionError;
-import com.epam.events.Configuration.Configuration;
-import com.epam.events.Helpers.Helpers;
-import com.epam.events.Pages.TalkPage;
-import com.epam.events.Pages.TalksLibraryPage;
+import com.epam.events.configuration.Configuration;
+import com.epam.events.helpers.Helpers;
+import com.epam.events.pages.TalkPage;
+import com.epam.events.pages.TalksLibraryPage;
 import org.aeonbits.owner.ConfigFactory;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -21,7 +21,6 @@ public class TalksLibrarySteps extends Abstract{
     public TalksLibrarySteps(WebDriver driver) {super(driver);}
 
     public TalksLibrarySteps openPage() {
-
         log.info("Open " + cfg.mainpage()+cfg.talkLibrary());
         open(cfg.mainpage()+cfg.talkLibrary());
 
@@ -37,71 +36,55 @@ public class TalksLibrarySteps extends Abstract{
         return this;
     }
 
-    public TalksLibrarySteps openCategoryFilter() {
+    public TalksLibrarySteps chooseCategory(String tag) {
         log.info("Open category filter");
         $(TalksLibraryPage.categoryFilterButton).click();
 
-        return this;
-    }
-
-    public TalksLibrarySteps openLocationFilter() {
-        log.info("Open location filter");
-        $(TalksLibraryPage.locationFilterButton).click();
-
-        return this;
-    }
-
-    public TalksLibrarySteps openLanguageFilter() {
-        log.info("Open language filter");
-        $(TalksLibraryPage.languageFilterButton).click();
-
-        return this;
-    }
-
-    public TalksLibrarySteps chooseCategory() {
-        log.info("Choose tag " + cfg.tag());
-        $(TalksLibraryPage.categoryFilterCheckbox(cfg.tag())).click();
+        log.info("Choose category " + tag);
+        $(TalksLibraryPage.categoryFilterCheckbox(tag)).click();
         $(TalksLibraryPage.categoryFilterButton).click();
         $(TalksLibraryPage.filerResultMessage).shouldBe(visible);
 
         return this;
     }
 
-    public TalksLibrarySteps chooseLocation() {
-        log.info("Choose location - " + cfg.location());
-        $(TalksLibraryPage.locationFilterCheckbox(cfg.location())).click();
+    public TalksLibrarySteps chooseLocation(String location) {
+        log.info("Open location filter");
+        $(TalksLibraryPage.locationFilterButton).click();
+
+        log.info("Choose location - " + location);
+        $(TalksLibraryPage.locationFilterCheckbox(location)).click();
         $(TalksLibraryPage.locationFilterButton).click();
         $(TalksLibraryPage.filerResultMessage).shouldBe(visible);
 
         return this;
     }
 
-    public TalksLibrarySteps chooseLanguage() {
-        log.info("Choose language - " + cfg.language());
-        $(TalksLibraryPage.languageFilterCheckbox(cfg.language())).click();
+    public TalksLibrarySteps chooseLanguage(String language) {
+        log.info("Open language filter");
+        $(TalksLibraryPage.languageFilterButton).click();
+
+        log.info("Choose language - " + language);
+        $(TalksLibraryPage.languageFilterCheckbox(language)).click();
         $(TalksLibraryPage.languageFilterButton).click();
         $(TalksLibraryPage.filerResultMessage).shouldBe(visible);
 
         return this;
     }
 
-    public TalksLibrarySteps searchByKeyword() {
-        log.info("Search by keyword " + cfg.keyword());
-        $(TalksLibraryPage.search).setValue(cfg.keyword()).pressEnter();
+    public TalksLibrarySteps searchByKeyword(String keyword) {
+        log.info("Search by keyword " + keyword);
+        $(TalksLibraryPage.search).setValue(keyword).pressEnter();
 
         $$(TalksLibraryPage.talksContainer).shouldHave(CollectionCondition.size(1));
         return this;
     }
 
-    public TalksLibrarySteps loadAllTalks() {
-        Helpers.talksLoader();
-
-        return this;
-    }
-
     /*Asserts*/
 
-    public void checkFilteredData() {
+    public void checkFilteredData(String tag, String location, String language) {
+        Helpers.talksLoader();
+
         log.info("Check filtered data");
         ArrayList<String> links;
 
@@ -113,15 +96,17 @@ public class TalksLibrarySteps extends Abstract{
             $(TalkPage.location).shouldBe(visible);
 
             log.info("Checking location");
-            $(TalkPage.location).shouldHave(text(cfg.location()));
+            $(TalkPage.location).shouldHave(text(location));
             log.info("Checking language");
-            $(TalkPage.language).shouldHave(text(cfg.language()));
+            $(TalkPage.language).shouldHave(text(language));
             log.info("Checking tag");
-            $(TalkPage.tag).shouldBe(visible);
+            $(TalkPage.tag(tag)).shouldBe(visible);
         }
     }
 
-    public  void checkForKeyword() {
+    public  void checkForKeywordInResults(String keyword) {
+        Helpers.talksLoader();
+
         log.info("Check keyword in talk card");
         ArrayList<String> savedLinks = new ArrayList<>();
         int size = $$(TalksLibraryPage.talksCards).size();
@@ -132,10 +117,10 @@ public class TalksLibrarySteps extends Abstract{
         for (SelenideElement talkCard : $$(TalksLibraryPage.talksCards)) {
             log.info("Checking " + cardsCounter + " card");
             try {
-                talkCard.$(TalksLibraryPage.talkCardTitle).shouldHave(text(cfg.keyword()));
+                talkCard.$(TalksLibraryPage.talkCardTitle).shouldHave(text(keyword));
             }
             catch (UIAssertionError ex) {
-                log.warn("Didn't find keyword \"" + cfg.keyword() + "\" in talk card. Title too long?");
+                log.warn("Didn't find keyword \"" + keyword + "\" in talk card. Title too long?");
                 log.info("Save url of talk and check it later");
                 savedLinks.add(talkCard.$(By.xpath("./div/a")).getAttribute("href"));
             }
@@ -148,7 +133,7 @@ public class TalksLibrarySteps extends Abstract{
                 log.info("Open page " + link);
                 open(link);
 
-                $(TalkPage.title).shouldHave(text(cfg.keyword()));
+                $(TalkPage.title).shouldHave(text(keyword));
                 log.info(linksCounter + " out of " + savedLinks.size() + " talks checked");
                 linksCounter++;
             }

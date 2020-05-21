@@ -1,4 +1,4 @@
-package com.epam.events.Pages;
+package com.epam.events.pages;
 
 import org.openqa.selenium.By;
 

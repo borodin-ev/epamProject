@@ -1,11 +1,11 @@
 package com.epam.events;
 
 import com.codeborne.selenide.WebDriverRunner;
-import com.epam.events.Configuration.Configuration;
-import com.epam.events.Helpers.StartSelenoid;
-import com.epam.events.StepDefs.AllEventsPageSteps;
-import com.epam.events.StepDefs.TalksLibrarySteps;
-import com.epam.events.WebDriverFactory.WebDriverFactory;
+import com.epam.events.configuration.Configuration;
+import com.epam.events.helpers.StartSelenoid;
+import com.epam.events.stepDefs.AllEventsPageSteps;
+import com.epam.events.stepDefs.TalksLibrarySteps;
+import com.epam.events.webDriverFactory.WebDriverFactory;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.junit.jupiter.api.AfterEach;
@@ -29,7 +29,7 @@ public class Hooks {
     }
 
     @BeforeEach
-    public void setUp() throws IOException, InterruptedException {
+    public void setUp() throws IOException {
         WebDriverRunner.setWebDriver(WebDriverFactory.create());
 
         allEventsPageSteps = new AllEventsPageSteps(WebDriverRunner.getWebDriver());

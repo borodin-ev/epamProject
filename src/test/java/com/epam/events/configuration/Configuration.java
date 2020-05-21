@@ -1,4 +1,4 @@
-package com.epam.events.Configuration;
+package com.epam.events.configuration;
 
 import org.aeonbits.owner.Config;
 import org.aeonbits.owner.Config.Sources;
@@ -11,18 +11,6 @@ public interface Configuration extends Config {
 
     @Key("mainpage")
     String mainpage();
-
-    @Key("filter.location")
-    String location();
-
-    @Key("filter.language")
-    String language();
-
-    @Key("filter.tag")
-    String tag();
-
-    @Key("search.keyword")
-    String keyword();
 
     @Key("endpoint.events")
     String events();

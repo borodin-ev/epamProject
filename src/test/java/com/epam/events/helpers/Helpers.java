@@ -1,10 +1,10 @@
-package com.epam.events.Helpers;
+package com.epam.events.helpers;
 
 import com.codeborne.selenide.SelenideElement;
 import com.codeborne.selenide.WebDriverRunner;
 import com.epam.events.Hooks;
-import com.epam.events.Pages.AllEventsPage;
-import com.epam.events.Pages.TalksLibraryPage;
+import com.epam.events.pages.AllEventsPage;
+import com.epam.events.pages.TalksLibraryPage;
 import com.epam.healenium.SelfHealingDriver;
 import com.epam.healenium.annotation.DisableHealing;
 import org.apache.logging.log4j.LogManager;
@@ -121,10 +121,10 @@ public class Helpers extends Hooks {
         className = element.getAttribute("class");
 
         if(className.contains("size-m")) {
-            return "m";
+            return "M";
         }
         else {
-            return "s";
+            return "S";
         }
     }
 

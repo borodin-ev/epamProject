@@ -1,4 +1,4 @@
-package com.epam.events.StepDefs;
+package com.epam.events.stepDefs;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;

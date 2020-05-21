@@ -1,4 +1,4 @@
-package com.epam.events.Helpers;
+package com.epam.events.helpers;
 
 import java.io.BufferedReader;
 import java.io.IOException;

@@ -1,4 +1,4 @@
-package com.epam.events.Helpers;
+package com.epam.events.helpers;
 
 import com.epam.reportportal.message.ReportPortalMessage;
 import org.apache.logging.log4j.LogManager;

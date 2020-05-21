@@ -1,6 +1,6 @@
 package com.epam.events;
 
-import com.epam.events.Helpers.Watcher;
+import com.epam.events.helpers.Watcher;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -38,8 +38,7 @@ public class EventsPortalTest extends Hooks {
     void viewPastEventsInCanada() {
         allEventsPageSteps.openPage().
                 openPastEvents().
-                openLocationFilter().
-                chooseCanadaLocation().
+                chooseCanadaLocationFilter().
                 pastEventsCompareWithTab().
                 checkEventsDatesInPast();
     }
@@ -56,24 +55,25 @@ public class EventsPortalTest extends Hooks {
     @Test
     @DisplayName("Check filters")
     void reportCategoryFilter() {
+        String category= "Design";
+        String location = "Belarus";
+        String language = "English";
+
         talksLibrarySteps.openPage().
-                openCategoryFilter().
-                chooseCategory().
+                chooseCategory(category).
                 openMoreFilters().
-                openLocationFilter().
-                chooseLocation().
-                openLanguageFilter().
-                chooseLanguage().
-                loadAllTalks().
-                checkFilteredData();
+                chooseLocation(location).
+                chooseLanguage(language).
+                checkFilteredData(category,location,language);
     }
 
     @Test
     @DisplayName("Check search by keyword")
     void searchReportsByKeyword() {
+        String keyword = "azure";
+
         talksLibrarySteps.openPage().
-                searchByKeyword().
-                loadAllTalks().
-                checkForKeyword();
+                searchByKeyword(keyword).
+                checkForKeywordInResults(keyword);
     }
 }

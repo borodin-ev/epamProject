@@ -1,7 +1,7 @@
-package com.epam.events.StepDefs;
+package com.epam.events.stepDefs;
 
 
-import com.epam.events.Pages.EventPage;
+import com.epam.events.pages.EventPage;
 import org.openqa.selenium.WebDriver;
 
 import static com.codeborne.selenide.Condition.*;
@@ -20,7 +20,5 @@ public class EventPageSteps extends Abstract {
         $(EventPage.eventDate).shouldBe(visible);
         log.info("Check event time is visible");
         $(EventPage.eventTime).shouldBe(visible);
-//        log.info("Check event location is visible");
-//        Helpers.checkElementIsVisible(EventPage.eventLocation);
     }
 }

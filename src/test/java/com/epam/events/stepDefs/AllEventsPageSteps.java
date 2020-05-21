@@ -1,8 +1,8 @@
-package com.epam.events.StepDefs;
+package com.epam.events.stepDefs;
 
 import com.codeborne.selenide.SelenideElement;
-import com.epam.events.Configuration.Configuration;
-import com.epam.events.Pages.AllEventsPage;
+import com.epam.events.configuration.Configuration;
+import com.epam.events.pages.AllEventsPage;
 import org.aeonbits.owner.ConfigFactory;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -12,10 +12,9 @@ import java.time.LocalDate;
 import java.util.Random;
 
 import static com.codeborne.selenide.CollectionCondition.sizeGreaterThan;
-import static com.codeborne.selenide.Condition.exist;
-import static com.codeborne.selenide.Condition.visible;
+import static com.codeborne.selenide.Condition.*;
 import static com.codeborne.selenide.Selenide.*;
-import static com.epam.events.Helpers.Helpers.*;
+import static com.epam.events.helpers.Helpers.*;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class AllEventsPageSteps extends Abstract {
@@ -34,6 +33,7 @@ public class AllEventsPageSteps extends Abstract {
     public AllEventsPageSteps openUpcomingEvents() {
         log.info("Click on upcoming events tab");
         $(AllEventsPage.upcomingEventsTab).click();
+        $(AllEventsPage.thisWeekTitle).shouldBe(visible);
 
         return this;
     }
@@ -46,14 +46,10 @@ public class AllEventsPageSteps extends Abstract {
         return this;
     }
 
-    public AllEventsPageSteps openLocationFilter() {
+    public AllEventsPageSteps chooseCanadaLocationFilter() {
         log.info("Click on location filter");
         $(AllEventsPage.locationFilter).click();
 
-        return this;
-    }
-
-    public AllEventsPageSteps chooseCanadaLocation() {
         log.info("Choose Canada location");
         $(AllEventsPage.locationFilterCanadaCheckbox).click();
         $(AllEventsPage.filerResultMessage).shouldBe(visible);

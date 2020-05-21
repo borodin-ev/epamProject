@@ -1,7 +1,6 @@
-package com.epam.events.WebDriverFactory;
+package com.epam.events.webDriverFactory;
 
-import com.epam.events.Configuration.Configuration;
-import com.epam.events.Helpers.StartSelenoid;
+import com.epam.events.configuration.Configuration;
 import com.epam.healenium.SelfHealingDriver;
 import io.github.bonigarcia.wdm.WebDriverManager;
 import org.apache.logging.log4j.LogManager;
@@ -28,7 +27,7 @@ public class WebDriverFactory {
         REMOTE
     }
 
-        public static SelfHealingDriver create() throws IOException, InterruptedException {
+        public static SelfHealingDriver create() throws IOException {
         WebDriver delegate;
 
         Browsers browser = Browsers.valueOf(cfg.browser().toUpperCase());
